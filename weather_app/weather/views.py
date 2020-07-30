@@ -11,10 +11,7 @@ import json
 
 app_id = "583780f540eb51ffae444cc967d5f6f8"
 
-
 # Create your views here.
-
-
 class WeatherData(APIView):
   
     authentication_classes = []
@@ -23,15 +20,21 @@ class WeatherData(APIView):
     template_name = 'weather.html'
 
     def get(self, request, format=None):
+        """
+        Get Function renders the HTML with forms, and basic App Data
+        """
         city_name = forms.City()
         city = ''
         temperature = []
         humidity = []
-        today = date.today()
-        five_days=date.today() + timedelta(days=5)
+        today = date.today() # Get Todays Date
+        five_days=date.today() + timedelta(days=5) # Get the date of 5 days from now
         return Response({'form': city_name, 'today': today, 'five_days_later': five_days})
 
     def post(self, request):
+        """
+        Get Function requests Data from the api and renders it on the page
+        """
         city= ''
         temperature = []
         humidity = []
@@ -44,16 +47,16 @@ class WeatherData(APIView):
         if request.method == "POST":
             city_name = forms.City(request.POST)
 
-            if city_name.is_valid():
-                city = city_name.cleaned_data['city']
-                start_date = city_name.cleaned_data['start']
-                end_date = city_name.cleaned_data['end']
+            if city_name.is_valid(): # Validate the form
+                city = city_name.cleaned_data['city'] # Extract City
+                start_date = city_name.cleaned_data['start'] # Extract Start Date
+                end_date = city_name.cleaned_data['end'] # Extract End Date 
                 start = f'{start_date} 00:00:00'
                 end = f'{end_date} 00:00:00'
                 base_url = "http://api.openweathermap.org/data/2.5/forecast"
                 complete_url = base_url + "?q=" + city + "&appid=" + app_id
                 try:
-
+                    # Query the API for a given City
                     json_data = requests.get(complete_url).json()
                     for item in json_data['list']:
                         time_forecasted = item['dt_txt']
@@ -62,13 +65,15 @@ class WeatherData(APIView):
                             humidity.append(item['main']['humidity'])
                 except KeyError as e:
                     city_name = forms.City()
-                    context = {"Exception": "City not found, Try again", 'form': city_name , 'today': today, 'five_days_later': five_days}
+                    context = {"Exception": "City not found, Try again", 'form': city_name , 'today': today, 'five_days_later': five_days }
                     return Response(context)
 
                     
 
         def min_temperature(arr):
-       
+            """
+            Function to calulate Minimum Temperature
+            """
             if len(arr) == 0:
                 return 0
             else:

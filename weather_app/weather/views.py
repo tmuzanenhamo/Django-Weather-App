@@ -43,7 +43,6 @@ class WeatherData(APIView):
         city_name = forms.City()
         today = date.today()
         five_days=date.today() + timedelta(days=5)
-        print(five_days)
         if request.method == "POST":
             city_name = forms.City(request.POST)
 

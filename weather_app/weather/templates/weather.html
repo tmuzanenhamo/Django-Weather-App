@@ -92,7 +92,19 @@
         }
         console.log(hum)
         var ctx = document.getElementById('tempChart');
-            var myChart = new Chart(ctx, {
+        var options = {
+        scales: {
+            yAxes: [{
+             display: true,
+                ticks: {
+                suggestedMin: temperatures_array[1]-10,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true   // minimum value will be 0.
+                        }
+                    }]
+                }
+            };
+                        var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
             labels: ['Max Temperarture','Minimum Temperature', 'Average Temperature', 'Median Temperature'],
@@ -112,7 +124,7 @@
                 'rgba(153, 102, 255, 1)',
             ],
             borderWidth: 1,
-        }]}})
+        }]},options})
         var ctx = document.getElementById('humChart');
         var myChart = new Chart(ctx, {
         type: 'bar',
@@ -134,7 +146,7 @@
                 'rgba(153, 102, 255, 1)',
             ],
             borderWidth: 1
-    }]}})
+    }]}, options})
     
     
 });

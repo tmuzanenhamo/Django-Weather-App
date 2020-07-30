@@ -1,0 +1,142 @@
+<!doctype html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <style>
+        .columns {
+        float: left;
+        width: 50%;
+        height: 100%;
+        padding: 5px;
+  
+        }
+
+        /* Clearfix (clear floats) */
+        .rows::after {
+        content: "";
+        clear: both;
+        display: table;
+        }
+    </style>
+
+
+    <title>Weather App</title>
+</head>
+<body>
+<div class="top-container">
+        <h1>Welcome to the Weather App</h1>
+        <form action="" method="post">
+            {{form.as_p}}
+            <input type="submit" class="btn btn-primary" value="Search" id="btnSubmit">
+            
+            {%csrf_token%}
+        </form>
+    <div class="card">
+        <div class="container">
+            <table>
+                    {% for key, values in city_weather.items %}
+                    <tr>
+                        <th>{{ key }}</th>
+                        {% if key == 'Maximum Temperature' or key == 'Minimum Temperature' or key == 'Average Temperature' or key == 'Median Temperature'%}
+                        <td>{{values}} &#x2103; </td>
+                        {%else%}
+                        <td>{{values}}</td>
+                        {%endif%}
+
+
+                </tr>
+                    {% endfor %}
+
+            </table>
+
+        </div>
+    </div>
+</div>
+<div class="middle-container">
+    <div class="rows">
+        <div class="columns">
+            <canvas id="tempChart" width="400" height="400"></canvas>
+        </div>
+        <div class="columns">
+            <canvas id="humChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+    
+  
+</div>
+
+<script>
+    $(document).ready(function() {
+        var temp = JSON.parse("{{temperature}}")
+        var hum = JSON.parse("{{humidity}}")
+        const temperature_values = Object.values(temp)
+        const humidity_values = Object.values(hum)
+        const temperatures_array = []
+        const humidity_array = []
+        for (const temp_value of temperature_values){
+            temperatures_array.push(temp_value)
+
+        }
+        for (const hum_value of humidity_values ){
+            humidity_array.push(hum_value)
+        }
+        console.log(hum)
+        var ctx = document.getElementById('tempChart');
+            var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: ['Max Temperarture','Minimum Temperature', 'Average Temperature', 'Median Temperature'],
+            datasets: [{
+            label: 'Temperature Chart',
+            data: temperatures_array,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 1
+        }]}})
+        var ctx = document.getElementById('humChart');
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Max Humidity','Minimum Humidity', 'Average Humidity', 'Median Humidity'],
+        datasets: [{
+        label: 'Humidity Chart',
+        data: humidity_array,
+        backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 1
+    }]}})
+    
+    
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.idea
+
+# Distribution / packaging
+.Python
+develop-eggs/
+downloads/
+eggs/
+venv/
+

@@ -1,0 +1,43 @@
+body {
+  color: #40514e;
+  margin: 0;
+  text-align: center;
+  font-family: "Merriweather", serif;
+  background-color: #e4f9f5;
+}
+
+.top-container {
+
+  position: relative;
+  padding-top: 100px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+td, th {
+
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.card {
+  width: 50%;
+  margin: 60px auto;
+  background-color: #e4f9f5;
+}
+
+.middle-container {
+  margin: 100px 0;
+  width: 50%;
+  background-color: inherit;
+  margin: auto;
+}
+

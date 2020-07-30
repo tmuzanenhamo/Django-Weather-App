@@ -50,7 +50,7 @@
     <div class="card">
         <div class="container">
             <table>
-                    {% for key, values in city_weather.items %}
+                    {% for key, values in city_weather.items %} <!--Iterate through Data-->
                     <tr>
                         <th>{{ key }}</th>
                         {% if key == 'Maximum Temperature' or key == 'Minimum Temperature' or key == 'Average Temperature' or key == 'Median Temperature'%}

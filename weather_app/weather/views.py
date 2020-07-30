@@ -26,7 +26,9 @@ class WeatherData(APIView):
         city = ''
         temperature = []
         humidity = []
-        return Response({'form': city_name})
+        today = date.today()
+        five_days=date.today() + timedelta(days=5)
+        return Response({'form': city_name, 'today': today, 'five_days_later': five_days})
 
     def post(self, request):
         city= ''

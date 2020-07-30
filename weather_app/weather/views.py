@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from datetime import datetime as dt
+from datetime import date, timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -35,6 +35,9 @@ class WeatherData(APIView):
         tmp = []
         hum = []
         city_name = forms.City()
+        today = date.today()
+        five_days=date.today() + timedelta(days=5)
+        print(five_days)
         if request.method == "POST":
             city_name = forms.City(request.POST)
 
@@ -170,7 +173,7 @@ class WeatherData(APIView):
         json_tmp = json.dumps(tmp)
         json_hum = json.dumps(hum)
 
-        context = {'city_weather': city_weather, 'form': city_name, 'temperature':json_tmp, 'humidity': json_hum}
+        context = {'city_weather': city_weather, 'form': city_name, 'temperature':json_tmp, 'humidity': json_hum, 'today': today, 'five_days_later': five_days}
 
             
 

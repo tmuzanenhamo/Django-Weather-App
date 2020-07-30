@@ -32,7 +32,8 @@
 </head>
 <body>
 <div class="top-container">
-        <h1>Welcome to the Weather App</h1>
+        <h1>Hi I'm A Weather Application</h1>
+        <p><em>I was integrated with the 5 Day/ 3 Hour Forecast API from Open Weather. This means i give return values starting from {{today}} to {{five_days_later}} </em></p>
         <form action="" method="post">
             {{form.as_p}}
             <input type="submit" class="btn btn-primary" value="Search" id="btnSubmit">
@@ -110,7 +111,7 @@
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
             ],
-            borderWidth: 1
+            borderWidth: 1,
         }]}})
         var ctx = document.getElementById('humChart');
         var myChart = new Chart(ctx, {

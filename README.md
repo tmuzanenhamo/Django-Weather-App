@@ -14,7 +14,7 @@ source venv/bin/activate
 
 Finally install pip packages:
 ```bash
-pip install -e .
+pip install -r requirements.txt .
 ```
 
 # Run application

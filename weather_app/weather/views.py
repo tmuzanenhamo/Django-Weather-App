@@ -62,7 +62,7 @@ class WeatherData(APIView):
                             humidity.append(item['main']['humidity'])
                 except KeyError as e:
                     city_name = forms.City()
-                    context = {"Exception": "City not found, Try again", 'form': city_name}
+                    context = {"Exception": "City not found, Try again", 'form': city_name , 'today': today, 'five_days_later': five_days}
                     return Response(context)
 
                     

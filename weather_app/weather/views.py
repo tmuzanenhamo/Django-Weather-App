@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
+from django.http import HttpResponse
 import requests
 from . import forms
 import json
@@ -44,23 +45,27 @@ class WeatherData(APIView):
             city_name = forms.City(request.POST)
 
             if city_name.is_valid():
-                print("Data: ")
-                print(city_name.cleaned_data['city'])
                 city = city_name.cleaned_data['city']
                 start_date = city_name.cleaned_data['start']
                 end_date = city_name.cleaned_data['end']
                 start = f'{start_date} 00:00:00'
                 end = f'{end_date} 00:00:00'
-                print(end)
-
                 base_url = "http://api.openweathermap.org/data/2.5/forecast"
                 complete_url = base_url + "?q=" + city + "&appid=" + app_id
-                json_data = requests.get(complete_url).json()
-                for item in json_data['list']:
-                    time_forecasted = item['dt_txt']
-                    if start < time_forecasted < end:
-                        temperature.append(item['main']['temp'] - 273.15)
-                        humidity.append(item['main']['humidity'])
+                try:
+
+                    json_data = requests.get(complete_url).json()
+                    for item in json_data['list']:
+                        time_forecasted = item['dt_txt']
+                        if start < time_forecasted < end:
+                            temperature.append(item['main']['temp'] - 273.15)
+                            humidity.append(item['main']['humidity'])
+                except KeyError as e:
+                    city_name = forms.City()
+                    context = {"Exception": "City not found, Try again", 'form': city_name}
+                    return Response(context)
+
+                    
 
         def min_temperature(arr):
        

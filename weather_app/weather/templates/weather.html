@@ -25,6 +25,11 @@
         clear: both;
         display: table;
         }
+        p{
+            width: 50%;
+            margin: auto;
+            
+        }
     </style>
 
 
@@ -33,13 +38,15 @@
 <body>
 <div class="top-container">
         <h1>Hi I'm A Weather Application</h1>
-        <p><em>I was integrated with the 5 Day/ 3 Hour Forecast API from Open Weather. This means i give return values starting from {{today}} to {{five_days_later}} </em></p>
+        <p><em>I was integrated with the 5 Day/ 3 Hour Forecast API from Open Weather. This means i return values starting from Today's date "{{today}}" to {{five_days_later}} "five days later" </em></p>
+        <hr>
         <form action="" method="post">
             {{form.as_p}}
             <input type="submit" class="btn btn-primary" value="Search" id="btnSubmit">
             
             {%csrf_token%}
         </form>
+        <hr>
     <div class="card">
         <div class="container">
             <table>
@@ -61,6 +68,7 @@
         </div>
     </div>
 </div>
+<hr>
 <div class="middle-container">
     <div class="rows">
         <div class="columns">
